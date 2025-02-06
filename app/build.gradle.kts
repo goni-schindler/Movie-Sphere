@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -21,7 +23,12 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        // Get the API keys from local.properties
+        val properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
 
+        // Set API keys in BuildConfig
+        buildConfigField("String", "TMDB_API_KEY", "\"${properties.getProperty("TMDB_API_KEY")}\"")
     }
 
     buildTypes {
@@ -42,6 +49,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -67,7 +75,8 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
-
+    implementation(libs.retrofit2.converter.gson)
+    implementation(libs.retrofit2)
 
     kspAndroidTest(libs.hilt.android.compiler)
     testImplementation(libs.junit)
