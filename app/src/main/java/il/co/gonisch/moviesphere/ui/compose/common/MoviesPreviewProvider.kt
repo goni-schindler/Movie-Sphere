@@ -3,9 +3,6 @@ package il.co.gonisch.moviesphere.ui.compose.common
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.paging.PagingData
 import il.co.gonisch.moviesphere.data.Movie
-import il.co.gonisch.moviesphere.data.MoviePoster
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import java.time.LocalDate
 
 class MoviesPreviewProvider : PreviewParameterProvider<List<Movie>> {

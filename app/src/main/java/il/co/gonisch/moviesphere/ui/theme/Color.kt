@@ -1,4 +1,5 @@
 package il.co.gonisch.moviesphere.ui.theme
+
 import androidx.compose.ui.graphics.Color
 
 val primaryLight = Color(0xFF4F5B92)

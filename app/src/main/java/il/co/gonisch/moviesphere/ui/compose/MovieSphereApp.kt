@@ -28,7 +28,8 @@ fun MovieSphereApp() {
         Column(
             Modifier
                 .fillMaxSize()
-                .padding(it)) {
+                .padding(it)
+        ) {
             GenresScreen()
         }
     }
@@ -49,11 +50,11 @@ private fun MovieSphereTopAppBar(
         modifier = modifier,
         actions = {
             IconButton(
-                { /*TODO*/  }
+                { /*TODO*/ }
             ) {
                 Icon(
-                   imageVector = Icons.Filled.Search,
-                   contentDescription = null
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = null
                 )
             }
         },

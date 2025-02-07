@@ -1,4 +1,5 @@
 package il.co.gonisch.moviesphere.ui.theme
+
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
@@ -40,10 +41,10 @@ fun MovieSphereTheme(
     content: @Composable() () -> Unit
 ) {
 
-  MaterialTheme(
-    colorScheme = customColorScheme,
-    typography = MaterialTheme.typography,
-    content = content
-  )
+    MaterialTheme(
+        colorScheme = customColorScheme,
+        typography = MaterialTheme.typography,
+        content = content
+    )
 }
 
