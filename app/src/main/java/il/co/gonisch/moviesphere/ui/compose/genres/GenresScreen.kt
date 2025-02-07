@@ -26,6 +26,7 @@ import il.co.gonisch.moviesphere.data.Movie
 import il.co.gonisch.moviesphere.ui.theme.MovieSphereTheme
 import il.co.gonisch.moviesphere.viewmodels.GenresScreenViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
 
@@ -35,19 +36,18 @@ fun GenresScreen(
     viewModel: GenresScreenViewModel = hiltViewModel()
 ) {
     val genres by viewModel.genres.collectAsState()
-    val movies = viewModel.movies
+
     GenresScreen(
         genres = genres,
-        movies = movies,
+        moviesProvider = { genreId -> viewModel.fetchMoviesByGenreId(genreId) },
         onPageSwap = { id -> viewModel.fetchMoviesByGenreId(id) }
     )
 }
 
 @Composable
 fun GenresScreen(
-    modifier: Modifier = Modifier,
     genres: List<Genre>,
-    movies: Flow<PagingData<Movie>>,
+    moviesProvider: (Int) -> Flow<PagingData<Movie>> = { flowOf() },
     onPageSwap: (Int) -> Unit = {}
 ) {
     var selectedTab by remember { mutableIntStateOf(0) }
@@ -78,11 +78,13 @@ fun GenresScreen(
             )
         }
     }
-    val pagingMovies = movies.collectAsLazyPagingItems()
     HorizontalPager(
         state = pagerState,
         verticalAlignment = Alignment.Top
     ) { index ->
+        val genreId = genres[index].id
+        val moviesFlow = remember(genreId) { moviesProvider(genreId) }
+        val pagingMovies = moviesFlow.collectAsLazyPagingItems()
         MoviesGridView(movies = pagingMovies)
     }
 }
