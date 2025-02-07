@@ -12,10 +12,13 @@ data class Movie(
     @SerializedName("original_title") var originalTitle: String? = null,
     @SerializedName("overview") var overview: String? = null,
     @SerializedName("popularity") var popularity: Double? = null,
-    @SerializedName("poster_path") var posterPath: String? = null,
-    @SerializedName("release_date") var releaseDate: LocalDate,
+    @SerializedName("poster_path") private val  _posterPath: String,
+    @SerializedName("release_date") var releaseDate: LocalDate?,
     @SerializedName("title") var title: String,
     @SerializedName("video") var video: Boolean? = null,
     @SerializedName("vote_average") var voteAverage: Double,
     @SerializedName("vote_count") var voteCount: Int? = null
-)
+) {
+    val posterPath: String
+        get() = "https://image.tmdb.org/t/p/w154$_posterPath"
+}

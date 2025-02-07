@@ -12,7 +12,7 @@ class MoviesPreviewProvider : PreviewParameterProvider<List<Movie>> {
                 Movie(
                     title = "Sonic the hedhoge",
                     releaseDate = LocalDate.now(),
-                    posterPath = "https://image.tmdb.org/t/p/w500//d8Ryb8AunYAuycVKDp5HpdWPKgC.jpg",
+                    _posterPath = "/d8Ryb8AunYAuycVKDp5HpdWPKgC.jpg",
                     voteAverage = 1.7
                 )
 
@@ -29,7 +29,7 @@ class MoviesPagingDataPreviewProvider : PreviewParameterProvider<PagingData<Movi
                     Movie(
                         title = "Sonic the hedhoge",
                         releaseDate = LocalDate.now(),
-                        posterPath = "https://image.tmdb.org/t/p/w500//d8Ryb8AunYAuycVKDp5HpdWPKgC.jpg",
+                        _posterPath = "/d8Ryb8AunYAuycVKDp5HpdWPKgC.jpg",
                         voteAverage = 1.7
                     )
                 )

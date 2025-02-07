@@ -35,7 +35,7 @@ fun MovieCardView(movie: Movie) {
         AsyncImage(
             modifier = Modifier.fillMaxWidth(),
             contentScale = ContentScale.Crop,
-            model = "https://image.tmdb.org/t/p/w154" + movie.posterPath,
+            model = movie.posterPath,
             contentDescription = null,
         )
         Text(
@@ -47,7 +47,7 @@ fun MovieCardView(movie: Movie) {
         Text(
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(5.dp),
-            text = "(${movie.releaseDate.year})",
+            text = "(${movie.releaseDate?.year})",
             color = MaterialTheme.colorScheme.tertiaryContainer,
         )
         StarRatingRow(

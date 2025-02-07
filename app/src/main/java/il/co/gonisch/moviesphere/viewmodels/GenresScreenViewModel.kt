@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import il.co.gonisch.moviesphere.data.Genre
 import il.co.gonisch.moviesphere.data.Movie
 import il.co.gonisch.moviesphere.data.MoviesRepository
+import il.co.gonisch.moviesphere.data.UiState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -21,8 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class GenresScreenViewModel
 @Inject constructor(private val moviesRepository: MoviesRepository) : ViewModel() {
-    private val _genres = MutableStateFlow<List<Genre>>(emptyList())
-    val genres: StateFlow<List<Genre>> = _genres.asStateFlow()
+    private val _genres = MutableStateFlow<UiState<List<Genre>>>(UiState.Loading)
+    val genres: StateFlow<UiState<List<Genre>>> = _genres.asStateFlow()
 
     init {
         fetchGenres()
@@ -32,10 +33,10 @@ class GenresScreenViewModel
         viewModelScope.launch {
             try {
                 moviesRepository.getGenresFlow().collect {
-                    _genres.value = it
+                    _genres.value = UiState.Success(it)
                 }
             } catch (e: Exception) {
-                
+                Log.d("gnrr", "ggnbn$e")
             }
         }
     }

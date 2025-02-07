@@ -1,9 +1,16 @@
 package il.co.gonisch.moviesphere.ui.compose.genres
 
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,10 +26,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import il.co.gonisch.moviesphere.data.Genre
 import il.co.gonisch.moviesphere.data.Movie
+import il.co.gonisch.moviesphere.data.UiState
 import il.co.gonisch.moviesphere.ui.theme.MovieSphereTheme
 import il.co.gonisch.moviesphere.viewmodels.GenresScreenViewModel
 import kotlinx.coroutines.flow.Flow
@@ -36,12 +45,28 @@ fun GenresScreen(
     viewModel: GenresScreenViewModel = hiltViewModel()
 ) {
     val genres by viewModel.genres.collectAsState()
+    when (genres) {
+        is UiState.Loading ->
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
 
-    GenresScreen(
-        genres = genres,
-        moviesProvider = { genreId -> viewModel.fetchMoviesByGenreId(genreId) },
-        onPageSwap = { id -> viewModel.fetchMoviesByGenreId(id) }
-    )
+        is UiState.Success -> GenresScreen(
+            genres = (genres as UiState.Success<List<Genre>>).data,
+            moviesProvider = { genreId -> viewModel.fetchMoviesByGenreId(genreId) },
+            onPageSwap = { id -> viewModel.fetchMoviesByGenreId(id) }
+        )
+
+        is UiState.Error -> {
+            Snackbar {
+
+            }
+        }
+    }
+
 }
 
 @Composable
@@ -85,7 +110,15 @@ fun GenresScreen(
         val genreId = genres[index].id
         val moviesFlow = remember(genreId) { moviesProvider(genreId) }
         val pagingMovies = moviesFlow.collectAsLazyPagingItems()
-        MoviesGridView(movies = pagingMovies)
+        Column(modifier = Modifier.fillMaxSize()) {
+            MoviesGridView(movies = pagingMovies)
+            // Show CircularProgressIndicator when loading new data
+            if (pagingMovies.loadState.refresh is LoadState.Loading ||
+                pagingMovies.loadState.append is LoadState.Loading
+            ) {
+                //TODO - set loading bar at the bottom
+            }
+        }
     }
 }
 
