@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -29,6 +30,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import il.co.gonisch.moviesphere.R
+import il.co.gonisch.moviesphere.data.Movie
 import il.co.gonisch.moviesphere.data.MoviePoster
 import il.co.gonisch.moviesphere.ui.compose.common.MoviesPreviewProvider
 import il.co.gonisch.moviesphere.ui.compose.common.StarRatingRow
@@ -37,33 +39,35 @@ import java.time.LocalDate
 import java.util.Date
 
 @Composable
-fun MovieCardView(moviePoster: MoviePoster) {
+fun MovieCardView(movie: Movie) {
     Column(
         modifier = Modifier
-            .width(150.dp)
+            .padding(8.dp)
             .clip(RoundedCornerShape(15.dp))
             .background(MaterialTheme.colorScheme.background),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AsyncImage(
-            model = moviePoster.posterUrl,
+            modifier = Modifier.fillMaxWidth(),
+            contentScale = ContentScale.Crop,
+            model = "https://image.tmdb.org/t/p/w154" + movie.posterPath,
             contentDescription = null,
         )
         Text(
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(5.dp),
-            text = moviePoster.title,
+            text = movie.title,
             color = MaterialTheme.colorScheme.onBackground
         )
         Text(
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(5.dp),
-            text = "(${moviePoster.releaseDate.year})",
+            text = "(${movie.releaseDate.year})",
             color = MaterialTheme.colorScheme.tertiaryContainer,
         )
         StarRatingRow(
             modifier = Modifier.padding(7.dp),
-            rating = moviePoster.voteAverage.toFloat(),
+            rating = movie.voteAverage.toFloat(),
             starFillColor = Color.Green
         )
     }
@@ -72,11 +76,11 @@ fun MovieCardView(moviePoster: MoviePoster) {
 @Composable
 @Preview
 fun MovieCardViewPreview(
-    @PreviewParameter(MoviesPreviewProvider::class) posters:List<MoviePoster>
+    @PreviewParameter(MoviesPreviewProvider::class) movies: List<Movie>
 ) {
     MovieSphereTheme {
         MovieCardView(
-            moviePoster = posters[0]
+            movie = movies[0]
         )
     }
 }

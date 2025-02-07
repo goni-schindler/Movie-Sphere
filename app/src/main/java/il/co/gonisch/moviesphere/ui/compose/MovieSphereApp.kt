@@ -29,7 +29,7 @@ fun MovieSphereApp() {
             Modifier
                 .fillMaxSize()
                 .padding(it)) {
-            GenresScreen(genres = listOf("wer","wer"))
+            GenresScreen()
         }
     }
 }

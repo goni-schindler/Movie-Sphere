@@ -1,21 +1,37 @@
 package il.co.gonisch.moviesphere.ui.compose.genres
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import il.co.gonisch.moviesphere.data.Movie
 import il.co.gonisch.moviesphere.data.MoviePoster
+import il.co.gonisch.moviesphere.ui.compose.common.MoviesPagingDataPreviewProvider
 import il.co.gonisch.moviesphere.ui.compose.common.MoviesPreviewProvider
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import java.time.LocalDate
 
 @Composable
-fun MoviesGridView(movies: List<MoviePoster>) {
-    LazyVerticalGrid(columns = GridCells.Fixed(2)) {
-        items(count = movies.size) { index ->
-            MovieCardView(moviePoster = movies[index])
+fun MoviesGridView(movies: LazyPagingItems<Movie>) {
+    LazyVerticalGrid(
+        modifier = Modifier.fillMaxWidth(),
+        columns = GridCells.Fixed(2)
+    ) {
+        items(count = movies.itemCount) { index ->
+            MovieCardView(movie = movies[index]!!)
         }
     }
 }
@@ -23,7 +39,9 @@ fun MoviesGridView(movies: List<MoviePoster>) {
 @Preview
 @Composable
 fun MoviesGridViewPreview(
-    @PreviewParameter(MoviesPreviewProvider::class) movies: List<MoviePoster>
+    @PreviewParameter(MoviesPagingDataPreviewProvider::class) movies: PagingData<Movie>
 ) {
-    MoviesGridView(movies = movies)
+    //** flowOf creates a static flow, NO async in Preview!!
+    val lazyMovies = flowOf(movies).collectAsLazyPagingItems()
+    MoviesGridView(movies = lazyMovies)
 }
