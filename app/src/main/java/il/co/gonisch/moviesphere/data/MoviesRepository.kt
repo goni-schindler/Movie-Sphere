@@ -12,9 +12,9 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class MoviesRepository @Inject constructor(private val api: TmdbApi) {
-    fun getGenresFlow(): Flow<Response<GetGenresResponse>> = flow {
-        val response = api.getGenres()
-        emit(response)
+    fun getGenresFlow(): Flow<List<Genre>> = flow {
+        val genres = api.getGenres().body()?.genres?.toList() ?: emptyList()
+        emit(genres)
     }.flowOn(Dispatchers.IO)//make sure the api call is done on the right thread
 
     fun getMoviesByGenreIdFlow(genreId: Int): Flow<PagingData<Movie>> = Pager(

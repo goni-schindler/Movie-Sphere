@@ -22,12 +22,14 @@ fun StarRatingRow(
     rating: Float,
     maxStars: Int = 5,
     starSize: Int = 24,
+    ratingScale: Float = 10f,
     starFillColor: Color = Color.Yellow,
     starEmptyColor: Color = Color.Gray
 ) {
     Row(modifier = modifier) {
-        val fullStars = rating.toInt() // Number of full stars
-        val hasHalfStar = (rating - fullStars) >= 0.5 // Check if there's a half star
+        val scaledRating = (rating / ratingScale) * maxStars
+        val fullStars = scaledRating.toInt() // Number of full stars
+        val hasHalfStar = (scaledRating - fullStars) >= 0.5 // Check if there's a half star
 
         // Draw full stars
         repeat(fullStars) {
