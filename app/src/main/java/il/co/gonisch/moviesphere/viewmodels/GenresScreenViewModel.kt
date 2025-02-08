@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -31,13 +32,13 @@ class GenresScreenViewModel
 
     private fun fetchGenres() {
         viewModelScope.launch {
-            try {
-                moviesRepository.getGenresFlow().collect {
+            moviesRepository.getGenresFlow()
+                .catch {
+                    _genres.value = UiState.Error("Error fetching genres")
+                }
+                .collect {
                     _genres.value = UiState.Success(it)
                 }
-            } catch (e: Exception) {
-                Log.d("gnrr", "ggnbn$e")
-            }
         }
     }
 

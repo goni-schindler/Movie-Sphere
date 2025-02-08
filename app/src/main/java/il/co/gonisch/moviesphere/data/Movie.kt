@@ -1,6 +1,7 @@
 package il.co.gonisch.moviesphere.data
 
 import com.google.gson.annotations.SerializedName
+import il.co.gonisch.moviesphere.api.TmdbApi
 import java.time.LocalDate
 
 data class Movie(
@@ -12,7 +13,7 @@ data class Movie(
     @SerializedName("original_title") var originalTitle: String? = null,
     @SerializedName("overview") var overview: String? = null,
     @SerializedName("popularity") var popularity: Double? = null,
-    @SerializedName("poster_path") private val  _posterPath: String,
+    @SerializedName("poster_path") private val _posterPath: String,
     @SerializedName("release_date") var releaseDate: LocalDate?,
     @SerializedName("title") var title: String,
     @SerializedName("video") var video: Boolean? = null,
@@ -20,5 +21,5 @@ data class Movie(
     @SerializedName("vote_count") var voteCount: Int? = null
 ) {
     val posterPath: String
-        get() = "https://image.tmdb.org/t/p/w154$_posterPath"
+        get() = "${TmdbApi.IMAGE_BASE_URL}$_posterPath"
 }

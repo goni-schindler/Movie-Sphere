@@ -29,6 +29,11 @@ android {
 
         // Set API keys in BuildConfig
         buildConfigField("String", "TMDB_API_KEY", "\"${properties.getProperty("TMDB_API_KEY")}\"")
+        buildConfigField(
+            "String",
+            "YOUTUBE_API_KEY",
+            "\"${properties.getProperty("YOUTUBE_API_KEY")}\""
+        )
     }
 
     buildTypes {
@@ -79,6 +84,7 @@ dependencies {
     implementation(libs.retrofit2.converter.gson)
     implementation(libs.retrofit2)
     implementation(libs.androidx.paging.compose)
+    implementation(libs.accompanist.systemuicontroller)
 
     kspAndroidTest(libs.hilt.android.compiler)
     testImplementation(libs.junit)

@@ -1,5 +1,6 @@
 package il.co.gonisch.moviesphere.ui.compose.common
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,11 +11,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlin.math.max
+import kotlin.math.min
 
 @Composable
 fun StarRatingRow(
@@ -26,9 +31,12 @@ fun StarRatingRow(
     starFillColor: Color = Color.Yellow,
     starEmptyColor: Color = Color.Gray
 ) {
-    Row(modifier = modifier) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.Absolute.Left
+    ) {
         val scaledRating = (rating / ratingScale) * maxStars
-        val fullStars = scaledRating.toInt() // Number of full stars
+        val fullStars = min(scaledRating.toInt(), maxStars) // Number of full stars
         val hasHalfStar = (scaledRating - fullStars) >= 0.5 // Check if there's a half star
 
         // Draw full stars
@@ -55,7 +63,9 @@ fun Star(color: Color, starSize: Int) {
         imageVector = Icons.Filled.Star,
         contentDescription = "Star Icon",
         tint = color,
-        modifier = Modifier.size(starSize.dp)
+        modifier = Modifier
+            .size(starSize.dp)
+            .testTag("StarIcon")
     )
 }
 
@@ -65,11 +75,15 @@ fun HalfTintedStar(
     rightColor: Color,
     size: Int = 24
 ) {
-    Box(modifier = Modifier.size(size.dp)) {
+    Box(
+        modifier = Modifier
+            .size(size.dp)
+            .testTag("HalfTintedStarIcon")
+    ) {
         // Left half (Clipped)
         Icon(
             imageVector = Icons.Filled.Star,
-            contentDescription = "Left Half Star",
+            contentDescription = "StarIcon",
             tint = leftColor,
             modifier = Modifier
                 .matchParentSize()
@@ -88,7 +102,7 @@ fun HalfTintedStar(
         // Right half (Clipped)
         Icon(
             imageVector = Icons.Filled.Star,
-            contentDescription = "Right Half Star",
+            contentDescription = "StarIcon",
             tint = rightColor,
             modifier = Modifier
                 .matchParentSize()

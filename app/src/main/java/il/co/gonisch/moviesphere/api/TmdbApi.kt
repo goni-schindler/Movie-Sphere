@@ -27,9 +27,8 @@ interface TmdbApi {
 
     companion object {
         private const val BASE_URL = "https://api.themoviedb.org/3/"
-
+        const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w154"
         fun create(): TmdbApi {
-
             val gsonBuilder = GsonBuilder()
                 .registerTypeAdapter(LocalDate::class.java, TmdbDateConverter())
                 .create()

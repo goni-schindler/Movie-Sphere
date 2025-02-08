@@ -1,4 +1,4 @@
-package il.co.gonisch.moviesphere.ui.compose.genres
+package il.co.gonisch.moviesphere.ui.compose.screen.genres
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.grid.GridCells
