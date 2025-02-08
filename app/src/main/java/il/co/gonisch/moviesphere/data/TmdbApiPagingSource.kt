@@ -6,10 +6,18 @@ import il.co.gonisch.moviesphere.api.TmdbApi
 import retrofit2.HttpException
 import java.io.IOException
 
+/**
+ * This class uses as a factory for defining
+ * how new movies pages should be retrieved from the api
+ */
 class TmdbApiPagingSource(
     private val api: TmdbApi,
     private val genreId: Int
 ) : PagingSource<Int, Movie>() {
+
+    /**
+     * @see PagingState stores the current state of the paging source
+     */
     override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
         return state.anchorPosition
     }

@@ -1,6 +1,5 @@
 package il.co.gonisch.moviesphere.api
 
-import android.util.Log
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
@@ -9,6 +8,11 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
+
+/**
+ * This class is highly vulnerable to bugs and should be
+ * covered with tests heavily
+ * */
 class TmdbDateConverter : JsonDeserializer<LocalDate> {
 
     private val formatter = DateTimeFormatter.ofPattern("yyy-MM-dd") // Matches "01-02-2025"

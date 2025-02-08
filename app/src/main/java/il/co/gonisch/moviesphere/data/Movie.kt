@@ -4,6 +4,11 @@ import com.google.gson.annotations.SerializedName
 import il.co.gonisch.moviesphere.api.TmdbApi
 import java.time.LocalDate
 
+/**
+ * @property releaseDate is provided as string and converted to LocalDate by a custom deserializer
+ * @property genreIds list of genre id's the current movie is relevant to
+ * @property _posterPath returned as a sub path and contacted under posterPath
+ */
 data class Movie(
     @SerializedName("adult") var adult: Boolean? = null,
     @SerializedName("backdrop_path") var backdropPath: String? = null,

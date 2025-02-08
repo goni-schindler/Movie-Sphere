@@ -26,13 +26,18 @@ interface TmdbApi {
     ): Response<GetMoviesResponse>
 
     companion object {
+        // These is not the right place for those Constants!
+        // I just wanted to avoid injecting the context.
         private const val BASE_URL = "https://api.themoviedb.org/3/"
         const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w154"
         fun create(): TmdbApi {
+
+            //create custom date converter since the api returns dates in a "pretty" format.
             val gsonBuilder = GsonBuilder()
                 .registerTypeAdapter(LocalDate::class.java, TmdbDateConverter())
                 .create()
 
+            // In large scale project a Http logger interceptor should be implemented
             val client = OkHttpClient.Builder()
                 .build()
 

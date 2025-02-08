@@ -36,6 +36,9 @@ private val customColorScheme = darkColorScheme(
 )
 
 
+/**
+ * always on dark theme because posters doesn't look good over light
+ */
 @Composable
 fun MovieSphereTheme(
     content: @Composable() () -> Unit

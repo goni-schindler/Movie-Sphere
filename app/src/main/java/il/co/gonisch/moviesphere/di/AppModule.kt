@@ -8,6 +8,11 @@ import il.co.gonisch.moviesphere.api.TmdbApi
 import il.co.gonisch.moviesphere.data.MoviesRepository
 import javax.inject.Singleton
 
+
+/**
+ * since we have only 2 providers to inject
+ * they can all be defined in a single module.
+ */
 @InstallIn(SingletonComponent::class)
 @Module
 class AppModule {
