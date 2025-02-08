@@ -13,7 +13,7 @@ The Repository contains branches to show the progress of writing this project.
 The general architecture is based on the Google best practice Sunflower App:
 https://github.com/android/sunflower
 
-## Some personal notes I wrote along the way that are mentioned worthy:
+## Some personal notes I wrote along the way that are mention worthy:
 #### Key differences between flows:
 
 | Feature                     | `Flow`                                  | `StateFlow`                               | `SharedFlow`                             |
@@ -24,8 +24,8 @@ https://github.com/android/sunflower
 | **State Retention**          | Does not retain any value after emission | Retains the last emitted value, even if there are no collectors | Does not retain the last value (unless configured) |
 
 #### LaunchedEffect:
-triggers recomposition based on the state of the parameter it was launched on.
-a safe-guard for responding to side effects - e.g. network call that needs to change the UI when finished.
+triggers recomposition based on the state of the parameter it was launched with.
+a safeguard for responding to side effects - e.g. network call that needs to change the UI when finished.
 
 #### Why I didn't use the TMDB SDK library:
 1) I assumed it wasn't the idea behind the assignment.
@@ -39,6 +39,7 @@ a safe-guard for responding to side effects - e.g. network call that needs to ch
 To create the API models I used a tool that converts JSON to Kotlin POJO:
 https://json2kt.com/
 I have used this tool for a couple of years, and that's why some model classes in this project look 'Auto Generated'.
+##### This is the only part that was auto-generated.
 
 #### Coil VS Glide
 Honestly, I chose Coil because I wanted to try it out.
@@ -47,11 +48,12 @@ I didn't do any research on which one is better.
 #### hard-coded strings
 along the project, I've left some hard-coded strings. 
 Obviously, this is a very bad practice, especially in multilingual projects.
-I wanted to focus on the Compose part and data flow instead of Context management.
+I wanted to focus on the Compose and data flow parts instead of Context management.
 
 #### Gradle Hell
-the reason I didn't fully test and added more complex features 
-is because I encountered a version synchronization nightmare that took me a full day to resolve before I even started writing the project itself.
+The reason I didn't fully test and add more complex features 
+is that I encountered a version synchronization nightmare that took me a full day to resolve before I even started writing the project itself.
+part of the job... I guess...
 (apparently, some Hilt versions support kapt only and not ksp)
 
 # Thank you so much for the opportunity and your time,
