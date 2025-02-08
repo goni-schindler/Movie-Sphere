@@ -85,6 +85,7 @@ dependencies {
     implementation(libs.retrofit2)
     implementation(libs.androidx.paging.compose)
     implementation(libs.accompanist.systemuicontroller)
+    implementation(libs.konfetti.compose)
 
     kspAndroidTest(libs.hilt.android.compiler)
     testImplementation(libs.junit)

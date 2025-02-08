@@ -21,7 +21,7 @@ fun MoviesGridView(movies: LazyPagingItems<Movie>) {
         columns = GridCells.Fixed(2)
     ) {
         items(count = movies.itemCount) { index ->
-            MovieCardView(movie = movies[index]!!)
+            movies[index]?.let { MovieCardView(movie = it) }
         }
     }
 }

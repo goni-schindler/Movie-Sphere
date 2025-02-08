@@ -20,9 +20,16 @@ interface TmdbApi {
 
     @GET("discover/movie")
     suspend fun getMoviesByGenreId(
-        @Query("api_key") apiKey: String = BuildConfig.TMDB_API_KEY,
         @Query("with_genres") genreId: Int,
-        @Query("page") page: Int = 1
+        @Query("page") page: Int = 1,
+        @Query("api_key") apiKey: String = BuildConfig.TMDB_API_KEY,
+    ): Response<GetMoviesResponse>
+
+    @GET("search/movie")
+    suspend fun getMoviesByQuery(
+        @Query("query") query: String,
+        @Query("page") page: Int = 1,
+        @Query("api_key") apiKey: String = BuildConfig.TMDB_API_KEY,
     ): Response<GetMoviesResponse>
 
     companion object {

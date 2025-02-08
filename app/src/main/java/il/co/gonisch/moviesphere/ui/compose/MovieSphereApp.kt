@@ -3,7 +3,7 @@ package il.co.gonisch.moviesphere.ui.compose
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -23,12 +23,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import il.co.gonisch.moviesphere.ui.compose.screen.Screen
 import il.co.gonisch.moviesphere.ui.compose.screen.genres.GenresScreen
+import il.co.gonisch.moviesphere.ui.compose.screen.home.HomeScreen
 
 
 @Composable
 fun MovieSphereApp() {
     val navController = rememberNavController() // Create the NavController
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -38,11 +38,13 @@ fun MovieSphereApp() {
     ) { paddingValues ->
         NavHost(
             navController = navController,
-            startDestination = "home", // Define initial screen
+            startDestination = "genres", // Define initial screen
             modifier = Modifier
                 .padding(paddingValues)
         ) {
-            composable("home") { /*TODO*/ }
+            composable("home") {
+                HomeScreen()
+            }
             composable("genres") {
                 GenresScreen()
             }
@@ -58,18 +60,21 @@ private fun MovieSphereTopAppBar(
 ) {
     CenterAlignedTopAppBar(
         title = {
+
             Text(
                 text = "Movie Sphere",
                 style = MaterialTheme.typography.headlineSmall
             )
+
         },
         modifier = modifier,
         actions = {
-            IconButton(
-                { /*TODO*/ }
+            IconButton(onClick = {
+                //TODO - Settings screen
+            }
             ) {
                 Icon(
-                    imageVector = Icons.Filled.Search,
+                    imageVector = Icons.Filled.Settings,
                     contentDescription = null
                 )
             }

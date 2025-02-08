@@ -30,8 +30,14 @@ class MoviesRepository @Inject constructor(private val api: TmdbApi) {
         pagingSourceFactory = { TmdbApiPagingSource(api, genreId) }  // Provide the PagingSource
     ).flow.flowOn(Dispatchers.IO)
 
+    fun getMoviesByQuery(query: String): Flow<List<Movie>> = flow {
+        val movies = api.getMoviesByQuery(query).body()?.movies?.toList() ?: emptyList()
+        emit(movies)
+    }.flowOn(Dispatchers.IO)
+
     companion object {
         //No official docs about it in the Tmdb Api so use this constant instead
         const val MAX_MOVIES_PER_AGE = 20
     }
+
 }
